@@ -5,7 +5,7 @@ import { serve } from "inngest/express";
 import dotenv from "dotenv";
 import { ENV } from "./lib/env.js";
 import { connectDB } from "./lib/db.js";
-import { inngest } from "./lib/inngest.js";
+import { inngest,functions } from "./lib/inngest.js";
 
 dotenv.config();
 
