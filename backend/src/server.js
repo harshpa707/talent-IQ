@@ -2,10 +2,12 @@ import express from "express";
 import path from "path";
 import cors from "cors";
 import dotenv from "dotenv";
+import { serve } from "inngest/express";
 
 import { ENV } from "./lib/env.js";
 import { connectDB } from "./lib/db.js";
 import emailRoutes from "./routes/emailRoutes.js";
+import { inngest, functions } from "./lib/inngest.js";
 
 dotenv.config();
 
@@ -14,7 +16,8 @@ const __dirname = path.resolve();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({ orign: ENV.CLIENT_URL, credentials: true }));
+app.use("/api/inngest", serve({ client: inngest, functions }));
 
 // Routes
 app.use("/api", emailRoutes);
