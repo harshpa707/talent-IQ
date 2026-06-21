@@ -4,6 +4,7 @@ import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/react";
 function App() {
   return (
     <>
+      <h1>hello the </h1>
       <header>
         <Show when="signed-out">
           <SignInButton />
