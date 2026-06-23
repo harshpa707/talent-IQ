@@ -114,10 +114,7 @@ export async function joinSessions(req, res) {
 
     const session = await Session.findById(id);
     if (!session) return res.status(404).json({ message: "Session not found" });
-    if (session.status !== "active") {
-      return res
-        .status(400)
-        .json({ message: "Cannot join a completed session" });
+    if (session
     }
     if (session.host.toString() === userId.toString()) {
       return res
