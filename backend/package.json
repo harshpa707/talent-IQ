@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@clerk/express": "^2.1.30",
+    "@stream-io/node-sdk": "^0.7.12",
     "body-parser": "^2.3.0",
     "cors": "^2.8.6",
     "dotenv": "^17.2.3",
