@@ -9,6 +9,7 @@ import { connectDB } from "./lib/db.js";
 import emailRoutes from "./routes/emailRoutes.js";
 import { inngest, functions } from "./lib/inngest.js";
 import chatRouter from "./routes/chatRouters.js";
+import sessionRoute from "./routes/sessionRoute.js"
 dotenv.config();
 
 const app = express();
@@ -22,6 +23,7 @@ app.use("/api/inngest", serve({ client: inngest, functions }));
 // Routes
 app.use("/api", emailRoutes);
 app.use("/api/chat", chatRouter);
+app.use("/api/session",sessionRoute)
 
 app.get("/health", (req, res) => {
   res.status(200).json({
