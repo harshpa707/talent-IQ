@@ -17,15 +17,9 @@ function App() {
           path="/"
           element={!isSignedIn ? <HomePage /> : <Navigate to={"/dashboard"} />}
         />
-        <Route
-          path="/dashboad"
-          element={isSignedIn ? <DashboardPages /> : <Navigate to={"/"} />}
-        />
+        <Route path="/dashboard" element={<DashboardPages />} />
 
-        <Route
-          path="/problem"
-          element={isSignedIn ? <ProblemPage /> : <Navigate to="/" />}
-        />
+        <Route path="/problems" element={<ProblemPage />} />
       </Routes>
 
       <Toaster toastOptions={{ duration: 3000 }} />
