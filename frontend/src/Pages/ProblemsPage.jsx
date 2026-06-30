@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar.jsx";
 
 import { PROBLEMS } from "../data/problem.js";
 import { ChevronRightIcon, Code2Icon } from "lucide-react";
@@ -17,6 +17,9 @@ function ProblemsPage() {
   const hardProblemsCount = problems.filter(
     (p) => p.difficulty === "Hard",
   ).length;
+
+  
+
 
   return (
     <div className="min-h-screen bg-base-200">

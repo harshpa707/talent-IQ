@@ -1,9 +1,11 @@
 import { Link, useLocation } from "react-router";
 import { BookOpenIcon, LayoutDashboardIcon, SparklesIcon } from "lucide-react";
-// import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/react";
+// import { sessionApi } from "../api/sessions.js";
+import { UserButton } from "@clerk/clerk-react";
 
 function Navbar() {
   const location = useLocation();
+  // sessionApi.getStreamToken
 
   console.log(location);
 
@@ -67,8 +69,9 @@ function Navbar() {
               <span className="font-medium hidden sm:inline">Dashboard</span>
             </div>
           </Link>
-
-          <div className="ml-4 mt-2">Harsh</div>
+          <div className="ml-4 mt-2">
+            <UserButton />
+          </div>
         </div>
       </div>
     </nav>
