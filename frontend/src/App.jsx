@@ -1,4 +1,4 @@
-import { useUser } from "@clerk/react";
+import { useUser } from "@clerk/clerk-react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import HomePage from "./Pages/HomePage";

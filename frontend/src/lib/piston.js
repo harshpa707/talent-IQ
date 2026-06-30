@@ -1,12 +1,11 @@
 // Piston API is a service for code execution
 
-
 const PISTON_API = "https://emkc.org/api/v2/piston";
 
 const LANGUAGE_VERSIONS = {
   javascript: { language: "javascript", version: "18.15.0" },
-  python: { language: "python", version: "3.10.0" },
-  java: { language: "java", version: "15.0.2" },
+  python: { language: "python", version: "3.11.4" },
+  java: { language: "java", version: "17.0.6" },
 };
 
 /**
