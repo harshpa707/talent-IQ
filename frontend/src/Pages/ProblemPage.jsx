@@ -6,7 +6,7 @@ import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import ProblemDescription from "../components/ProblemDescription.jsx";
 import OutputPanel from "../components/OutputPanel.jsx";
 import CodeEditorPanel from "../components/CodeEditorPanel .jsx";
-import { executeCode } from "../lib/piston.js";
+import { executeCode } from "../lib/judge0.js";
 import toast from "react-hot-toast";
 import confetti from "canvas-confetti";
 function ProblemPage() {
