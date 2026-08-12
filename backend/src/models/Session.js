@@ -35,6 +35,7 @@ const sessionSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    
   },
   { timestamps: true },
 );
