@@ -12,17 +12,29 @@ export const protectRoute = async (req, res, next) => {
     }
 
     // Find user in DB by Clerk ID
-    const user = await User.findOne({ clerkId });
+    // const user = await User.findOne({ clerkId });
 
-    if (!user) {
-      return res.status(404).json({
-        massage: "User not found",
+    // if (!user) {
+    //   return res.status(404).json({
+    //     massage: "User not found",
+    //   });
+    // }
+
+    // req.user = user;
+
+    // next();
+    const existingUser = await User.findOne({
+      clerkId: clerkUser.id,
+    });
+
+    if (!existingUser) {
+      await User.create({
+        clerkId: clerkUser.id,
+        name: `${clerkUser.firstName} ${clerkUser.lastName}`,
+        email: clerkUser.emailAddresses[0].emailAddress,
+        profileImage: clerkUser.imageUrl,
       });
     }
-
-    req.user = user;
-
-    next();
   } catch (error) {
     console.error("Error in protectRoute middleware:", error);
     res.status(500).json({

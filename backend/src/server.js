@@ -1,8 +1,15 @@
+import dns from "node:dns";
+
+dns.setServers([
+  "8.8.8.8",
+  "8.8.4.4",
+]);
 import express from "express";
 import path from "path";
 import cors from "cors";
 import dotenv from "dotenv";
 import { serve } from "inngest/express";
+import { clerkMiddleware } from "@clerk/express";
 
 import { ENV } from "./lib/env.js";
 import { connectDB } from "./lib/db.js";
@@ -17,6 +24,7 @@ const __dirname = path.resolve();
 
 // Middleware
 app.use(express.json());
+app.use(clerkMiddleware());
 app.use(
   cors({
     origin: ENV.CLIENT_URL,

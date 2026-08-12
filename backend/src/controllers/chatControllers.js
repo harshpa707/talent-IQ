@@ -9,7 +9,7 @@ export async function getStreamToken(req,res){
       token,
       userId:req.user.clerkId,
       userName:req.user.name,
-      userImage:req.user.image
+      // userImage:req.user.image
     })
   } catch (error) {
     console.log("Error in getStream controller:", error.massage);
