@@ -18,7 +18,8 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "inngest": "^3.54.2",
-    "mongoose": "^8.19.1",
+    "mongodb": "^7.5.0",
+    "mongoose": "^9.9.2",
     "nodemailer": "^9.0.1",
     "stream-chat": "^9.47.0"
   },

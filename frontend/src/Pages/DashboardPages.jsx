@@ -33,6 +33,13 @@ export default function DashboardPages() {
       },
       {
         onSuccess: (data) => {
+          console.log("CREATE SESSION RESPONSE:", data);
+
+          if (!data?.session?._id) {
+            console.error("Session data missing:", data);
+            return;
+          }
+
           setShowCreateModal(false);
           navigate(`/session/${data.session._id}`);
         },
@@ -42,7 +49,7 @@ export default function DashboardPages() {
   const activeSessions = activeSessionsData?.sessions || [];
   const recentSessions = recentSessionsData?.sessions || [];
   const isUserInSession = (session) => {
-    if (!user.id) return false;
+    if (!user?.id) return false;
 
     return (
       session.host?.clerkId === user.id ||
