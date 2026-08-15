@@ -11,23 +11,36 @@ export const protectRoute = async (req, res, next) => {
       });
     }
 
-    // Clerk se complete user details lao
     const clerkUser = await clerkClient.users.getUser(clerkId);
 
-    // MongoDB me user check karo
     let existingUser = await User.findOne({ clerkId });
 
-    // Agar user DB me nahi hai to create karo
+    // Agar clerkId se user nahi mila
     if (!existingUser) {
-      existingUser = await User.create({
-        clerkId: clerkUser.id,
-        name: `${clerkUser.firstName || ""} ${clerkUser.lastName || ""}`.trim(),
-        email: clerkUser.emailAddresses[0]?.emailAddress,
-        // profileImage: clerkUser.imageUrl,
-      });
+      // Email se existing user check karo
+      const email = clerkUser.emailAddresses[0]?.emailAddress;
+
+      existingUser = await User.findOne({ email });
+
+      if (existingUser) {
+        // Existing account ko current Clerk ID se link karo
+        existingUser.clerkId = clerkUser.id;
+        existingUser.name =
+          `${clerkUser.firstName || ""} ${clerkUser.lastName || ""}`.trim();
+        existingUser.profileImage = clerkUser.imageUrl;
+
+        await existingUser.save();
+      } else {
+        // Completely new user
+        existingUser = await User.create({
+          clerkId: clerkUser.id,
+          name: `${clerkUser.firstName || ""} ${clerkUser.lastName || ""}`.trim(),
+          email,
+          profileImage: clerkUser.imageUrl,
+        });
+      }
     }
 
-    // Request ke andar user save karo
     req.user = existingUser;
 
     next();
