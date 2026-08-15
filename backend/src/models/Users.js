@@ -11,10 +11,10 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    profileImage: {
-      type: String,
-      default: "",
-    },
+    // profileImage: {
+    //   type: String,
+    //   default: "",
+    // },
     clerkId: {
       type: String,
       required: true,
