@@ -1,4 +1,4 @@
-import { getAuth } from "@clerk/express";
+import { getAuth, clerkClient } from "@clerk/express";
 import User from "../models/Users.js";
 
 export const protectRoute = async (req, res, next) => {
@@ -7,38 +7,35 @@ export const protectRoute = async (req, res, next) => {
 
     if (!clerkId) {
       return res.status(401).json({
-        massage: "Unauthorized - invalid token",
+        message: "Unauthorized - invalid token",
       });
     }
 
-    // Find user in DB by Clerk ID
-    // const user = await User.findOne({ clerkId });
+    // Clerk se complete user details lao
+    const clerkUser = await clerkClient.users.getUser(clerkId);
 
-    // if (!user) {
-    //   return res.status(404).json({
-    //     massage: "User not found",
-    //   });
-    // }
+    // MongoDB me user check karo
+    let existingUser = await User.findOne({ clerkId });
 
-    // req.user = user;
-
-    // next();
-    const existingUser = await User.findOne({
-      clerkId: clerkUser.id,
-    });
-
+    // Agar user DB me nahi hai to create karo
     if (!existingUser) {
-      await User.create({
+      existingUser = await User.create({
         clerkId: clerkUser.id,
-        name: `${clerkUser.firstName} ${clerkUser.lastName}`,
-        email: clerkUser.emailAddresses[0].emailAddress,
-        profileImage: clerkUser.imageUrl,
+        name: `${clerkUser.firstName || ""} ${clerkUser.lastName || ""}`.trim(),
+        email: clerkUser.emailAddresses[0]?.emailAddress,
+        // profileImage: clerkUser.imageUrl,
       });
     }
+
+    // Request ke andar user save karo
+    req.user = existingUser;
+
+    next();
   } catch (error) {
     console.error("Error in protectRoute middleware:", error);
-    res.status(500).json({
-      massage: "Internal Server Error",
+
+    return res.status(500).json({
+      message: "Internal Server Error",
     });
   }
 };
