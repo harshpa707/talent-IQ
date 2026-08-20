@@ -10,7 +10,15 @@ if (!apiKey || !apiSecret) {
 }
 
 export const chatClient = StreamChat.getInstance(apiKey, apiSecret); //chat
-export const streamClient = new StreamClient(apiKey, apiSecret); // video call
+export const streamClient = new StreamClient(apiKey, apiSecret, {
+  timeout: 10000,
+
+}); // video call
+console.log("STREAM_API_KEY:", apiKey ? "Loaded" : "Missing");
+console.log(
+  "STREAM_API_SECRET:",
+  apiSecret ? "Loaded" : "Missing"
+);
 
 export const upsertStreamUser = async (userData) => {
   try {
