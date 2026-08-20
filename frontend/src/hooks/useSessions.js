@@ -3,24 +3,50 @@ import toast from "react-hot-toast";
 import { sessionApi } from "../api/sessions.js";
 
 export const useCreateSession = () => {
-  const result = useMutation({
+  return useMutation({
     mutationKey: ["createSession"],
-    mutationFn: sessionApi.createSession,
-    onSuccess: () => toast.success("Session created successfully!"),
-    onError: (error) =>
-      toast.error(error.response?.data?.message || "Failed to create room"),
-  });
 
-  return result;
+    mutationFn: async (data) => {
+      const response = await sessionApi.createSession(data);
+      return response.data;
+    },
+
+    onSuccess: () => {
+      toast.success("Session created successfully!");
+    },
+
+    onError: (error) => {
+      toast.error(
+        error.response?.data?.message || "Failed to create room"
+      );
+    },
+  });
 };
 
 export const useActiveSessions = () => {
-  const result = useQuery({
+  return useQuery({
     queryKey: ["activeSessions"],
-    queryFn: sessionApi.getActiveSessions,
+    queryFn: async () => {
+      const response = await sessionApi.getActiveSessions();
+      return response.data;
+    },
   });
-  return result;
 };
+// export const useActiveSessions = () => {
+//   const result = useQuery({
+//     queryKey: ["activeSessions"],
+//     queryFn: sessionApi.getActiveSessions,
+//   });
+//   return result;
+// };
+// export const useMyRecentSessions = () => {
+//   const result = useQuery({
+//     queryKey: ["myRecentSessions"],
+//     queryFn: sessionApi.getMyRecentSessions,
+//   });
+
+//   return result;
+// };
 export const useMyRecentSessions = () => {
   const result = useQuery({
     queryKey: ["myRecentSessions"],

@@ -22,8 +22,12 @@ export default function DashboardPages() {
 
   const { data: activeSessionsData, isLoading: loadingActiveSessions } =
     useActiveSessions();
+
+
+
   const { data: recentSessionsData, isLoading: loadingRecentSessions } =
     useMyRecentSessions();
+
   const handleCreateRoom = () => {
     if (!roomConfig.problem || !roomConfig.difficulty) return;
     createSessionMutation.mutate(
@@ -32,17 +36,18 @@ export default function DashboardPages() {
         difficulty: roomConfig.difficulty.toLowerCase(),
       },
       {
+      
         onSuccess: (data) => {
-          console.log("CREATE SESSION RESPONSE:", data);
+  console.log("CREATE SESSION RESPONSE:", data);
 
-          if (!data?.session?._id) {
-            console.error("Session data missing:", data);
-            return;
-          }
+  if (!data?.session?._id) {
+    console.error("Session data missing:", data);
+    return;
+  }
 
-          setShowCreateModal(false);
-          navigate(`/session/${data.session._id}`);
-        },
+  setShowCreateModal(false);
+  navigate(`/session/${data.session._id}`);
+},
       },
     );
   };

@@ -4,7 +4,12 @@ import Session from "../models/Session.js";
 
 export async function createSession(req, res) {
   try {
+    console.log("CREATE SESSION START");
+
     const { problem, difficulty } = req.body;
+
+    console.log("BODY:", req.body);
+    console.log("USER:", req.user);
 
     const userId = req.user._id;
     const clerkId = req.user.clerkId;
@@ -15,18 +20,47 @@ export async function createSession(req, res) {
       });
     }
 
-    // Generate unique call ID
     const callId = `session_${Date.now()}_${Math.random()
       .toString(36)
       .slice(2, 10)}`;
 
-    // Create session in MongoDB
+    console.log("Before MongoDB save");
+
     const session = await Session.create({
       problem,
       difficulty,
       host: userId,
       callId,
     });
+
+    console.log("MongoDB SESSION CREATED:", session);
+
+
+// export async function createSession(req, res) {
+//   try {
+//     const { problem, difficulty } = req.body;
+
+//     const userId = req.user._id;
+//     const clerkId = req.user.clerkId;
+
+//     if (!problem || !difficulty) {
+//       return res.status(400).json({
+//         message: "Problem and difficulty are required",
+//       });
+//     }
+
+//     // Generate unique call ID
+//     const callId = `session_${Date.now()}_${Math.random()
+//       .toString(36)
+//       .slice(2, 10)}`;
+
+//     // Create session in MongoDB
+//     const session = await Session.create({
+//       problem,
+//       difficulty,
+//       host: userId,
+//       callId,
+//     });
 
     // Create Stream Video call
     const call = streamClient.video.call("default", callId);
