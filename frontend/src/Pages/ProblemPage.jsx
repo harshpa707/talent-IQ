@@ -21,7 +21,9 @@ function ProblemPage() {
   const [isRunning, setIsRunning] = useState(false);
   const currentProblem = PROBLEMS[currentProblemId];
 
-  useEffect(() => {
+ 
+
+   useEffect(() => {
     if (id && PROBLEMS[id]) {
       setCurrentProblemId(id);
       setCode(PROBLEMS[id].starterCode[selectedLanguage]);
@@ -101,7 +103,7 @@ function ProblemPage() {
       toast.error("Code execution failed!");
     }
   };
-
+//  hellpo mera name harsh pandey 
   return (
     <div className="h-screen bg-base-100 flex flex-col">
       <Navbar />
